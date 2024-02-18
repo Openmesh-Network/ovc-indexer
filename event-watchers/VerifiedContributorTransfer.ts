@@ -3,6 +3,7 @@ import { Storage } from "..";
 import { VerifiedContributorContract } from "../contracts/VerifiedContributor";
 import { ContractWatcher } from "../openrd-indexer/utils/contract-watcher";
 import { createVerifiedContributorIfNotExists } from "./verifiedContributorHelpers";
+import { normalizeAddress } from "../openrd-indexer/event-watchers/userHelpers";
 
 export interface Transfer {
   from: Address;
@@ -31,6 +32,6 @@ export function watchVerifiedContributorTransfer(contractWatcher: ContractWatche
 export async function processVerifiedContributorTransfer(event: Transfer, storage: Storage): Promise<void> {
   await storage.verifiedContributors.update((verifiedContributors) => {
     createVerifiedContributorIfNotExists(verifiedContributors, event.tokenId);
-    verifiedContributors[event.tokenId.toString()].owner = event.to;
+    verifiedContributors[event.tokenId.toString()].owner = normalizeAddress(event.to);
   });
 }
