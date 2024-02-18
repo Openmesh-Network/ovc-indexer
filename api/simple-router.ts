@@ -4,7 +4,8 @@ import { Storage } from "..";
 import { replacer } from "../openrd-indexer/utils/json";
 import { parseBigInt } from "../openrd-indexer/utils/parseBigInt";
 import { calculateScore } from "../utils/score-calculator";
-import { maxUint256 } from "viem";
+import { maxUint256, zeroAddress } from "viem";
+import { normalizeAddress } from "../openrd-indexer/event-watchers/userHelpers";
 
 function malformedRequest(res: Response, error: string): void {
   res.statusCode = 400;
@@ -60,5 +61,13 @@ export function registerRoutes(app: Express, storage: Storage) {
       .sort((vc1, vc2) => vc2.score - vc1.score);
 
     res.end(JSON.stringify(leaderboard, replacer));
+  });
+
+  // Gets the total number of verified contributors
+  app.get(basePath + "totalVerifiedContributors", async function (req, res) {
+    const verifiedContributors = await storage.verifiedContributors.get();
+    const totalVerifiedContributors = Object.values(verifiedContributors).filter((vc) => vc.owner !== normalizeAddress(zeroAddress)).length;
+
+    res.end(JSON.stringify({ totalVerifiedContributors: totalVerifiedContributors }, replacer));
   });
 }
