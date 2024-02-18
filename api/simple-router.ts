@@ -47,17 +47,23 @@ export function registerRoutes(app: Express, storage: Storage) {
 
   // Gets the all scores of verified contributors, sorted from high to low
   app.get(basePath + "leaderboard", async function (req, res) {
-    const verifiedContributors = Object.keys(await storage.verifiedContributors.get()).map((tokenId) => parseBigInt(tokenId));
+    const verifiedContributors = await storage.verifiedContributors.get();
+    const tokenIds = Object.keys(verifiedContributors).map((tokenId) => parseBigInt(tokenId));
     const scores = await storage.scores.get();
-    const leaderboard = verifiedContributors
+    const leaderboard = tokenIds
       .map((tokenId) => {
         if (tokenId === undefined) {
           console.warn(`Got non bigint verified contributor token id in leaderboard calculation`);
           return { tokenId: maxUint256, score: 0 };
         }
+        if (verifiedContributors[tokenId.toString()].owner === normalizeAddress(zeroAddress)) {
+          // Token was burned
+          return { tokenId: maxUint256, score: 0 };
+        }
         const score = calculateScore(scores, tokenId);
         return { tokenId: tokenId, score: score };
       })
+      .filter((vc) => vc.tokenId !== maxUint256)
       .sort((vc1, vc2) => vc2.score - vc1.score);
 
     res.end(JSON.stringify(leaderboard, replacer));
