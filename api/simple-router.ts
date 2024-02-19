@@ -89,8 +89,11 @@ export function registerRoutes(app: Express, storage: Storage) {
   // Gets all department hashes
   app.get(basePath + "departments", async function (req, res) {
     const departments = await storage.departments.get();
+    const hashes = Object.keys(departments).map((hash) => {
+      return { hash: hash };
+    });
 
-    res.end(JSON.stringify(Object.keys(departments), replacer));
+    res.end(JSON.stringify(hashes, replacer));
   });
 
   // Gets the total number of verified contributors
