@@ -1,7 +1,7 @@
 import { config as loadEnv } from "dotenv";
 import express from "express";
 import storageManager from "node-persist";
-import { Hex } from "viem";
+import { Address, Hex } from "viem";
 import { mainnet, polygon, polygonMumbai, sepolia } from "viem/chains";
 
 import { registerRoutes } from "./api/simple-router";
@@ -14,6 +14,10 @@ import { Epoch } from "./types/score";
 import { watchVerifiedContributorTransfer } from "./event-watchers/VerifiedContributorTransfer";
 import { watchVerifiedContributorTagAdded } from "./event-watchers/VerifiedContributorTagAdded";
 import { watchVerifiedContributorTagRemoved } from "./event-watchers/VerifiedContributorTagRemoved";
+import { OptimisticPayment } from "./types/optimistic-payment";
+import { watchOptimisticPaymentCreated } from "./event-watchers/OptimisticPaymentCreated";
+import { watchOptimisticPaymentRejected } from "./event-watchers/OptimisticPaymentRejected";
+import { watchOptimisticPaymentExecuted } from "./event-watchers/OptimisticPaymentExecuted";
 
 export interface VerifiedContributorsStorage {
   [tokenId: string]: VerfiedContributor;
@@ -22,10 +26,16 @@ export interface DepartmentsStorage {
   [hash: Hex]: Department;
 }
 export type ScoresStorage = Epoch[];
+export interface OptimisticPaymentsStorage {
+  [dao: Address]: {
+    [requestId: number]: OptimisticPayment;
+  };
+}
 export interface Storage {
   verifiedContributors: PersistentJson<VerifiedContributorsStorage>;
   departments: PersistentJson<DepartmentsStorage>;
   scores: PersistentJson<ScoresStorage>;
+  optimisticPayments: PersistentJson<OptimisticPaymentsStorage>;
 }
 
 async function start() {
@@ -56,12 +66,13 @@ async function start() {
 
   // Data (memory + json files (synced) currently, could be migrated to a database solution if needed in the future)
   await storageManager.init({ dir: "storage" });
-  const storage = {
+  const storage: Storage = {
     verifiedContributors: new PersistentJson<VerifiedContributorsStorage>("verifiedContributors", {}),
     departments: new PersistentJson<DepartmentsStorage>("departments", {
       ["0x0"]: { name: "Smart Contracts", dao: "0x0" },
     }),
     scores: new PersistentJson<ScoresStorage>("scores", []),
+    optimisticPayments: new PersistentJson<OptimisticPaymentsStorage>("optimisticPayments", {}),
   };
 
   multichainWatcher.forEach((contractWatcher) => {
@@ -71,6 +82,11 @@ async function start() {
       watchVerifiedContributorTransfer(contractWatcher, storage);
       watchVerifiedContributorTagAdded(contractWatcher, storage);
       watchVerifiedContributorTagRemoved(contractWatcher, storage);
+
+      // Departments are only on this chain
+      watchOptimisticPaymentCreated(contractWatcher, storage);
+      watchOptimisticPaymentRejected(contractWatcher, storage);
+      watchOptimisticPaymentExecuted(contractWatcher, storage);
     }
   });
 

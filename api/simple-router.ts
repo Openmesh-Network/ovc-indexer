@@ -4,7 +4,7 @@ import { Storage } from "..";
 import { replacer } from "../openrd-indexer/utils/json";
 import { parseBigInt } from "../openrd-indexer/utils/parseBigInt";
 import { calculateScore } from "../utils/score-calculator";
-import { isHex, maxUint256, zeroAddress } from "viem";
+import { isAddress, isHex, maxUint256, zeroAddress } from "viem";
 import { normalizeAddress } from "../openrd-indexer/event-watchers/userHelpers";
 
 function malformedRequest(res: Response, error: string): void {
@@ -60,6 +60,23 @@ export function registerRoutes(app: Express, storage: Storage) {
     const score = calculateScore(scores, tokenId);
 
     res.end(JSON.stringify({ score: score }, replacer));
+  });
+
+  // Gets the optmistic payment request of a single dao
+  app.get(basePath + "optmisticPayments/:dao", async function (req, res) {
+    const dao = req.params.dao;
+    if (!isAddress(dao)) {
+      return malformedRequest(res, "dao is not a valid address");
+    }
+
+    const optimisticPayments = await storage.optimisticPayments.get();
+    const daoOptimsiticPayments = optimisticPayments[dao];
+    if (!daoOptimsiticPayments) {
+      res.statusCode = 404;
+      return res.end("Optmistic payments for this dao not found");
+    }
+
+    res.end(JSON.stringify(daoOptimsiticPayments, replacer));
   });
 
   // Gets the all scores of verified contributors, sorted from high to low
