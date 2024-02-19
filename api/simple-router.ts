@@ -4,7 +4,7 @@ import { Storage } from "..";
 import { replacer } from "../openrd-indexer/utils/json";
 import { parseBigInt } from "../openrd-indexer/utils/parseBigInt";
 import { calculateScore } from "../utils/score-calculator";
-import { maxUint256, zeroAddress } from "viem";
+import { isHex, maxUint256, zeroAddress } from "viem";
 import { normalizeAddress } from "../openrd-indexer/event-watchers/userHelpers";
 
 function malformedRequest(res: Response, error: string): void {
@@ -30,6 +30,23 @@ export function registerRoutes(app: Express, storage: Storage) {
     }
 
     res.end(JSON.stringify(verifiedContributor, replacer));
+  });
+
+  // Gets details of a single department
+  app.get(basePath + "department/:hash", async function (req, res) {
+    const hash = req.params.hash;
+    if (!isHex(hash)) {
+      return malformedRequest(res, "hash is not valid hex");
+    }
+
+    const departments = await storage.departments.get();
+    const department = departments[hash];
+    if (!department) {
+      res.statusCode = 404;
+      return res.end("Department not found");
+    }
+
+    res.end(JSON.stringify(department, replacer));
   });
 
   // Gets the score of a single verified contributor
@@ -67,6 +84,13 @@ export function registerRoutes(app: Express, storage: Storage) {
       .sort((vc1, vc2) => vc2.score - vc1.score);
 
     res.end(JSON.stringify(leaderboard, replacer));
+  });
+
+  // Gets all department hashes
+  app.get(basePath + "departments", async function (req, res) {
+    const departments = await storage.departments.get();
+
+    res.end(JSON.stringify(Object.keys(departments), replacer));
   });
 
   // Gets the total number of verified contributors
