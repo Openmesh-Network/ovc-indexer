@@ -19,7 +19,6 @@ export function createOptimsticPaymentIfNotExists(optimsticPayments: OptimisticP
       executed: false,
       executor: zeroAddress,
 
-      triggeredBy: zeroAddress,
       cachedMetadata: "",
       cachedRejectionMetadata: "",
     };
