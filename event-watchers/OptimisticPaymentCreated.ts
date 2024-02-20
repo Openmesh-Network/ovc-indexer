@@ -5,6 +5,7 @@ import { OptimisticActionsContract } from "../contracts/OptimisticActions";
 import { TasksContract } from "../openrd-indexer/contracts/Tasks";
 import { PaymentAction } from "../types/optimistic-payment";
 import { createOptimsticPaymentIfNotExists } from "./optimsticPaymentHelpers";
+import { normalizeAddress } from "../openrd-indexer/event-watchers/userHelpers";
 
 export interface OptimisticAction {
   id: number;
@@ -40,18 +41,19 @@ export function watchOptimisticPaymentCreated(contractWatcher: ContractWatcher, 
 }
 
 export async function processOptimisticPaymentCreated(event: OptimisticAction, storage: Storage): Promise<void> {
+  const dao = normalizeAddress(event.dao);
   const actions = event.actions.map(toPaymentAction).filter((action) => action !== undefined) as PaymentAction[];
   await storage.optimisticPayments.update((optimisticPayments) => {
-    createOptimsticPaymentIfNotExists(optimisticPayments, event.dao, event.id);
-    optimisticPayments[event.dao][event.id].metadata = event.metadata;
-    optimisticPayments[event.dao][event.id].executableFrom = event.executableFrom;
-    optimisticPayments[event.dao][event.id].actions = actions;
+    createOptimsticPaymentIfNotExists(optimisticPayments, dao, event.id);
+    optimisticPayments[dao][event.id].metadata = event.metadata;
+    optimisticPayments[dao][event.id].executableFrom = event.executableFrom;
+    optimisticPayments[dao][event.id].actions = actions;
   });
 }
 
 function toPaymentAction({ to, value, data }: { to: Address; value: bigint; data: Hex }): PaymentAction | undefined {
   // Ignores most actions (as those should not have permission to execute anyhow and we do not know how to decode them)
-  if (to !== TasksContract.address) {
+  if (normalizeAddress(to) !== normalizeAddress(TasksContract.address)) {
     return undefined;
   }
 
