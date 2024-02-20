@@ -69,7 +69,7 @@ async function start() {
   const storage: Storage = {
     verifiedContributors: new PersistentJson<VerifiedContributorsStorage>("verifiedContributors", {}),
     departments: new PersistentJson<DepartmentsStorage>("departments", {
-      ["0x0"]: { name: "Smart Contracts", dao: "0x0" },
+      ["0xD2F13CD29396B9C8521BEBE1F04844500C1EA11F55F41FFE5C9F9835370C870C"]: { name: "Smart Contracts", dao: "0x7530bbf2c0684656f171aff4fdf93dacfc1189fd" },
     }),
     scores: new PersistentJson<ScoresStorage>("scores", []),
     optimisticPayments: new PersistentJson<OptimisticPaymentsStorage>("optimisticPayments", {}),
