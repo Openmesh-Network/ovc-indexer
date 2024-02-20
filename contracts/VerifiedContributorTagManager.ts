@@ -113,6 +113,13 @@ export const VerifiedContributorTagManagerContract = {
     },
     {
       type: "function",
+      name: "setId",
+      inputs: [{ name: "tokenId", type: "uint256", internalType: "uint256" }],
+      outputs: [],
+      stateMutability: "nonpayable",
+    },
+    {
+      type: "function",
       name: "setRoleAdmin",
       inputs: [
         { name: "role", type: "bytes32", internalType: "bytes32" },
