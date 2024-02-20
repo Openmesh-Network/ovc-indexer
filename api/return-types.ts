@@ -9,7 +9,7 @@ export type DepartmentReturn = Department;
 
 export type ScoreReturn = { score: number };
 
-export type OptimsticPaymentsReturn = { [requestId: number]: OptimisticPayment };
+export type OptimisticPaymentsReturn = { [requestId: number]: OptimisticPayment };
 
 export type LeaderboardReturn = { tokenId: bigint; score: number }[];
 
