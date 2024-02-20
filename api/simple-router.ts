@@ -62,8 +62,8 @@ export function registerRoutes(app: Express, storage: Storage) {
     res.end(JSON.stringify({ score: score }, replacer));
   });
 
-  // Gets the optmistic payment request of a single dao
-  app.get(basePath + "optmisticPayments/:dao", async function (req, res) {
+  // Gets the optimistic payment request of a single dao
+  app.get(basePath + "optimisticPayments/:dao", async function (req, res) {
     const dao = req.params.dao;
     if (!isAddress(dao)) {
       return malformedRequest(res, "dao is not a valid address");
@@ -73,7 +73,7 @@ export function registerRoutes(app: Express, storage: Storage) {
     const daoOptimsiticPayments = optimisticPayments[dao];
     if (!daoOptimsiticPayments) {
       res.statusCode = 404;
-      return res.end("Optmistic payments for this dao not found");
+      return res.end("Optimistic payments for this dao not found");
     }
 
     res.end(JSON.stringify(daoOptimsiticPayments, replacer));

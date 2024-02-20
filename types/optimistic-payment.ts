@@ -28,4 +28,7 @@ export interface OptimisticPayment {
   rejectionMetadata: string;
   executed: boolean;
   executor: Address;
+
+  cachedMetadata: string;
+  cachedRejectionMetadata: string;
 }

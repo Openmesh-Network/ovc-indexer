@@ -18,6 +18,10 @@ export function createOptimsticPaymentIfNotExists(optimsticPayments: OptimisticP
       rejectionMetadata: "",
       executed: false,
       executor: zeroAddress,
+
+      triggeredBy: zeroAddress,
+      cachedMetadata: "",
+      cachedRejectionMetadata: "",
     };
   }
 }

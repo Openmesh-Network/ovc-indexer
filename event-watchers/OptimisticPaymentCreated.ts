@@ -6,6 +6,7 @@ import { TasksContract } from "../openrd-indexer/contracts/Tasks";
 import { PaymentAction } from "../types/optimistic-payment";
 import { createOptimsticPaymentIfNotExists } from "./optimsticPaymentHelpers";
 import { normalizeAddress } from "../openrd-indexer/event-watchers/userHelpers";
+import { fetchMetadata } from "../openrd-indexer/utils/metadata-fetch";
 
 export interface OptimisticAction {
   id: number;
@@ -49,6 +50,14 @@ export async function processOptimisticPaymentCreated(event: OptimisticAction, s
     optimisticPayments[dao][event.id].executableFrom = event.executableFrom;
     optimisticPayments[dao][event.id].actions = actions;
   });
+
+  await fetchMetadata(event.metadata)
+    .then((metadata) =>
+      storage.optimisticPayments.update((optimisticPayments) => {
+        optimisticPayments[dao][event.id].cachedMetadata = metadata;
+      })
+    )
+    .catch((err) => console.error(`Error while fetching optimstic payment metadata ${event.metadata} (${event.dao}-${event.id}): ${JSON.stringify(err)}`));
 }
 
 function toPaymentAction({ to, value, data }: { to: Address; value: bigint; data: Hex }): PaymentAction | undefined {
