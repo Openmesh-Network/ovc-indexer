@@ -62,7 +62,7 @@ export function registerRoutes(app: Express, storage: Storage) {
     res.end(JSON.stringify({ score: score }, replacer));
   });
 
-  // Gets the optimistic payment request of a single dao
+  // Gets the optimistic payment requests of a single dao
   app.get(basePath + "optimisticPayments/:dao", async function (req, res) {
     const dao = req.params.dao;
     if (!isAddress(dao)) {
@@ -77,6 +77,23 @@ export function registerRoutes(app: Express, storage: Storage) {
     }
 
     res.end(JSON.stringify(daoOptimsiticPayments, replacer));
+  });
+
+  // Gets the role to use for management interaction with a single dao
+  app.get(basePath + "daoRole/:dao", async function (req, res) {
+    const dao = req.params.dao;
+    if (!isAddress(dao)) {
+      return malformedRequest(res, "dao is not a valid address");
+    }
+
+    const daoRoles = await storage.daoRolesStorage.get();
+    const daoRole = daoRoles[dao];
+    if (!daoRole) {
+      res.statusCode = 404;
+      return res.end("Role for this dao not found");
+    }
+
+    res.end(JSON.stringify({ role: daoRole }, replacer));
   });
 
   // Gets the all scores of verified contributors, sorted from high to low

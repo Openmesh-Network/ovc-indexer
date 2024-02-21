@@ -11,6 +11,8 @@ export type ScoreReturn = { score: number };
 
 export type OptimisticPaymentsReturn = { [requestId: number]: OptimisticPayment };
 
+export type DAORoleReturn = { role: bigint };
+
 export type LeaderboardReturn = { tokenId: bigint; score: number }[];
 
 export type DepartmentsReturn = { hash: Hex }[];
