@@ -99,7 +99,7 @@ async function start() {
 
   multichainWatcher.forEach((contractWatcher) => {
     watchTaskCompleted(contractWatcher, storage);
-    if (contractWatcher.chain.id === 80001) {
+    if (contractWatcher.chain.id === polygonMumbai.id) {
       // Verified Contributors is only deployed on this chain
       watchVerifiedContributorTransfer(contractWatcher, storage);
       watchVerifiedContributorTagAdded(contractWatcher, storage);

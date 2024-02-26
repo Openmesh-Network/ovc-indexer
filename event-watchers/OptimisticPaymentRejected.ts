@@ -43,7 +43,5 @@ export async function processOptimisticPaymentRejected(event: OptimisticRejectio
         optimisticPayments[dao][event.id].cachedRejectionMetadata = metadata;
       })
     )
-    .catch((err) =>
-      console.error(`Error while fetching optimstic payment rejection metadata ${event.metadata} (${event.dao}-${event.id}): ${JSON.stringify(err)}`)
-    );
+    .catch((err) => console.error(`Error while fetching optimstic payment rejection metadata ${event.metadata} (${event.dao}-${event.id}): ${err}`));
 }

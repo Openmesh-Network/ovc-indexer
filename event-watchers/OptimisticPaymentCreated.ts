@@ -57,7 +57,7 @@ export async function processOptimisticPaymentCreated(event: OptimisticAction, s
         optimisticPayments[dao][event.id].cachedMetadata = metadata;
       })
     )
-    .catch((err) => console.error(`Error while fetching optimstic payment metadata ${event.metadata} (${event.dao}-${event.id}): ${JSON.stringify(err)}`));
+    .catch((err) => console.error(`Error while fetching optimstic payment metadata ${event.metadata} (${event.dao}-${event.id}): ${err}`));
 }
 
 function toPaymentAction({ to, value, data }: { to: Address; value: bigint; data: Hex }): PaymentAction | undefined {
