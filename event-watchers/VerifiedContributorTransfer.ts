@@ -1,9 +1,9 @@
 import { Address } from "viem";
 import { Storage } from "..";
-import { VerifiedContributorContract } from "../contracts/VerifiedContributor";
-import { ContractWatcher } from "../openrd-indexer/utils/contract-watcher";
-import { createVerifiedContributorIfNotExists } from "./verifiedContributorHelpers";
-import { normalizeAddress } from "../openrd-indexer/event-watchers/userHelpers";
+import { VerifiedContributorContract } from "../contracts/VerifiedContributor.js";
+import { ContractWatcher } from "../openrd-indexer/utils/contract-watcher.js";
+import { createVerifiedContributorIfNotExists } from "./verifiedContributorHelpers.js";
+import { normalizeAddress } from "../openrd-indexer/event-watchers/userHelpers.js";
 
 export interface Transfer {
   from: Address;

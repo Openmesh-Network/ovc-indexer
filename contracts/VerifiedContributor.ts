@@ -1,5 +1,5 @@
 export const VerifiedContributorContract = {
-  address: "0x497422f05f709f879289b8b2e6CC7180A6829862",
+  address: "0xe820B2Fef0484480d48F51e695781e3830526Cc7",
   abi: [
     { type: "constructor", inputs: [], stateMutability: "nonpayable" },
     {
@@ -98,17 +98,9 @@ export const VerifiedContributorContract = {
         { name: "name", type: "string", internalType: "string" },
         { name: "version", type: "string", internalType: "string" },
         { name: "chainId", type: "uint256", internalType: "uint256" },
-        {
-          name: "verifyingContract",
-          type: "address",
-          internalType: "address",
-        },
+        { name: "verifyingContract", type: "address", internalType: "address" },
         { name: "salt", type: "bytes32", internalType: "bytes32" },
-        {
-          name: "extensions",
-          type: "uint256[]",
-          internalType: "uint256[]",
-        },
+        { name: "extensions", type: "uint256[]", internalType: "uint256[]" },
       ],
       stateMutability: "view",
     },
@@ -178,13 +170,6 @@ export const VerifiedContributorContract = {
         { name: "operator", type: "address", internalType: "address" },
       ],
       outputs: [{ name: "", type: "bool", internalType: "bool" }],
-      stateMutability: "view",
-    },
-    {
-      type: "function",
-      name: "metadataUri",
-      inputs: [],
-      outputs: [{ name: "", type: "string", internalType: "string" }],
       stateMutability: "view",
     },
     {
@@ -316,7 +301,7 @@ export const VerifiedContributorContract = {
     {
       type: "function",
       name: "tokenURI",
-      inputs: [{ name: "", type: "uint256", internalType: "uint256" }],
+      inputs: [{ name: "tokenId", type: "uint256", internalType: "uint256" }],
       outputs: [{ name: "", type: "string", internalType: "string" }],
       stateMutability: "view",
     },
@@ -536,12 +521,7 @@ export const VerifiedContributorContract = {
           indexed: true,
           internalType: "address",
         },
-        {
-          name: "to",
-          type: "address",
-          indexed: true,
-          internalType: "address",
-        },
+        { name: "to", type: "address", indexed: true, internalType: "address" },
         {
           name: "tokenId",
           type: "uint256",
@@ -581,11 +561,7 @@ export const VerifiedContributorContract = {
       ],
     },
     { type: "error", name: "ERC6372InconsistentClock", inputs: [] },
-    {
-      type: "error",
-      name: "ERC721EnumerableForbiddenBatchMint",
-      inputs: [],
-    },
+    { type: "error", name: "ERC721EnumerableForbiddenBatchMint", inputs: [] },
     {
       type: "error",
       name: "ERC721IncorrectOwner",
@@ -646,11 +622,7 @@ export const VerifiedContributorContract = {
       name: "InvalidAccountNonce",
       inputs: [
         { name: "account", type: "address", internalType: "address" },
-        {
-          name: "currentNonce",
-          type: "uint256",
-          internalType: "uint256",
-        },
+        { name: "currentNonce", type: "uint256", internalType: "uint256" },
       ],
     },
     { type: "error", name: "InvalidShortString", inputs: [] },

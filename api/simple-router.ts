@@ -1,11 +1,11 @@
 import { Express, Response } from "express";
+import { isAddress, isHex, maxUint256, zeroAddress } from "viem";
 
 import { Storage } from "..";
-import { replacer } from "../openrd-indexer/utils/json";
-import { parseBigInt } from "../openrd-indexer/utils/parseBigInt";
-import { calculateScore } from "../utils/score-calculator";
-import { isAddress, isHex, maxUint256, zeroAddress } from "viem";
-import { normalizeAddress } from "../openrd-indexer/event-watchers/userHelpers";
+import { replacer } from "../openrd-indexer/utils/json.js";
+import { parseBigInt } from "../openrd-indexer/utils/parseBigInt.js";
+import { calculateScore } from "../utils/score-calculator.js";
+import { normalizeAddress } from "../openrd-indexer/event-watchers/userHelpers.js";
 
 function malformedRequest(res: Response, error: string): void {
   res.statusCode = 400;

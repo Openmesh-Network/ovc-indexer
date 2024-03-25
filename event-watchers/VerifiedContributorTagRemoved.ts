@@ -1,8 +1,8 @@
 import { Hash } from "viem";
 import { Storage } from "..";
-import { ContractWatcher } from "../openrd-indexer/utils/contract-watcher";
-import { createVerifiedContributorIfNotExists } from "./verifiedContributorHelpers";
-import { VerifiedContributorTagManagerContract } from "../contracts/VerifiedContributorTagManager";
+import { ContractWatcher } from "../openrd-indexer/utils/contract-watcher.js";
+import { createVerifiedContributorIfNotExists } from "./verifiedContributorHelpers.js";
+import { VerifiedContributorTagManagerContract } from "../contracts/VerifiedContributorTagManager.js";
 
 export interface TagRemoved {
   tokenId: bigint;

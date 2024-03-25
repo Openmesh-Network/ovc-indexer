@@ -1,12 +1,12 @@
 import { Address, Hex, decodeFunctionData } from "viem";
 import { Storage } from "..";
-import { ContractWatcher } from "../openrd-indexer/utils/contract-watcher";
-import { OptimisticActionsContract } from "../contracts/OptimisticActions";
-import { TasksContract } from "../openrd-indexer/contracts/Tasks";
-import { PaymentAction } from "../types/optimistic-payment";
-import { createOptimsticPaymentIfNotExists } from "./optimsticPaymentHelpers";
-import { normalizeAddress } from "../openrd-indexer/event-watchers/userHelpers";
-import { fetchMetadata } from "../openrd-indexer/utils/metadata-fetch";
+import { ContractWatcher } from "../openrd-indexer/utils/contract-watcher.js";
+import { OptimisticActionsContract } from "../contracts/OptimisticActions.js";
+import { TasksContract } from "../openrd-indexer/contracts/Tasks.js";
+import { PaymentAction } from "../types/optimistic-payment.js";
+import { createOptimsticPaymentIfNotExists } from "./optimsticPaymentHelpers.js";
+import { normalizeAddress } from "../openrd-indexer/event-watchers/userHelpers.js";
+import { fetchMetadata } from "../openrd-indexer/utils/metadata-fetch.js";
 
 export interface OptimisticAction {
   id: number;

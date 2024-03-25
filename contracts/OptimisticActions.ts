@@ -1,5 +1,5 @@
 export const OptimisticActionsContract = {
-  address: "0xB6EfC885eaF39E5d3dD4FbBB9b60B1A1BbAE76CD",
+  address: "0x9863b54A09672C21961802B5527Cd8Dc80e6637D",
   abi: [
     {
       type: "function",
@@ -21,20 +21,12 @@ export const OptimisticActionsContract = {
             { name: "data", type: "bytes", internalType: "bytes" },
           ],
         },
-        {
-          name: "_failureMap",
-          type: "uint256",
-          internalType: "uint256",
-        },
+        { name: "_failureMap", type: "uint256", internalType: "uint256" },
         { name: "_metadata", type: "string", internalType: "string" },
       ],
       outputs: [
         { name: "id", type: "uint32", internalType: "uint32" },
-        {
-          name: "executableFrom",
-          type: "uint64",
-          internalType: "uint64",
-        },
+        { name: "executableFrom", type: "uint64", internalType: "uint64" },
       ],
       stateMutability: "nonpayable",
     },
@@ -42,19 +34,11 @@ export const OptimisticActionsContract = {
       type: "function",
       name: "executeAction",
       inputs: [
-        {
-          name: "_dao",
-          type: "address",
-          internalType: "contract IDAO",
-        },
+        { name: "_dao", type: "address", internalType: "contract IDAO" },
         { name: "_id", type: "uint32", internalType: "uint32" },
       ],
       outputs: [
-        {
-          name: "returnValues",
-          type: "bytes[]",
-          internalType: "bytes[]",
-        },
+        { name: "returnValues", type: "bytes[]", internalType: "bytes[]" },
         { name: "failureMap", type: "uint256", internalType: "uint256" },
       ],
       stateMutability: "nonpayable",
@@ -73,11 +57,7 @@ export const OptimisticActionsContract = {
       type: "function",
       name: "setAdmin",
       inputs: [
-        {
-          name: "_dao",
-          type: "address",
-          internalType: "contract IDAO",
-        },
+        { name: "_dao", type: "address", internalType: "contract IDAO" },
         { name: "_admin", type: "address", internalType: "address" },
       ],
       outputs: [],
@@ -87,16 +67,8 @@ export const OptimisticActionsContract = {
       type: "function",
       name: "setExecuteDelay",
       inputs: [
-        {
-          name: "_dao",
-          type: "address",
-          internalType: "contract IDAO",
-        },
-        {
-          name: "_executeDelay",
-          type: "uint64",
-          internalType: "uint64",
-        },
+        { name: "_dao", type: "address", internalType: "contract IDAO" },
+        { name: "_executeDelay", type: "uint64", internalType: "uint64" },
       ],
       outputs: [],
       stateMutability: "nonpayable",
@@ -112,12 +84,7 @@ export const OptimisticActionsContract = {
       type: "event",
       name: "ActionCreated",
       inputs: [
-        {
-          name: "id",
-          type: "uint32",
-          indexed: true,
-          internalType: "uint32",
-        },
+        { name: "id", type: "uint32", indexed: true, internalType: "uint32" },
         {
           name: "dao",
           type: "address",
@@ -172,12 +139,7 @@ export const OptimisticActionsContract = {
       type: "event",
       name: "ActionExecuted",
       inputs: [
-        {
-          name: "id",
-          type: "uint32",
-          indexed: true,
-          internalType: "uint32",
-        },
+        { name: "id", type: "uint32", indexed: true, internalType: "uint32" },
         {
           name: "dao",
           type: "address",
@@ -209,12 +171,7 @@ export const OptimisticActionsContract = {
       type: "event",
       name: "ActionRejected",
       inputs: [
-        {
-          name: "id",
-          type: "uint32",
-          indexed: true,
-          internalType: "uint32",
-        },
+        { name: "id", type: "uint32", indexed: true, internalType: "uint32" },
         {
           name: "dao",
           type: "address",

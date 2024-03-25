@@ -4,20 +4,20 @@ import storageManager from "node-persist";
 import { Address, Hex, keccak256, toBytes } from "viem";
 import { mainnet, polygon, polygonMumbai, sepolia } from "viem/chains";
 
-import { registerRoutes } from "./api/simple-router";
-import { watchTaskCompleted } from "./event-watchers/TaskCompleted";
-import { VerfiedContributor } from "./types/verified-contributor";
-import { MultischainWatcher } from "./openrd-indexer/utils/multichain-watcher";
-import { PersistentJson } from "./openrd-indexer//utils/persistent-json";
-import { Department } from "./types/department";
-import { Epoch } from "./types/score";
-import { watchVerifiedContributorTransfer } from "./event-watchers/VerifiedContributorTransfer";
-import { watchVerifiedContributorTagAdded } from "./event-watchers/VerifiedContributorTagAdded";
-import { watchVerifiedContributorTagRemoved } from "./event-watchers/VerifiedContributorTagRemoved";
-import { OptimisticPayment } from "./types/optimistic-payment";
-import { watchOptimisticPaymentCreated } from "./event-watchers/OptimisticPaymentCreated";
-import { watchOptimisticPaymentRejected } from "./event-watchers/OptimisticPaymentRejected";
-import { watchOptimisticPaymentExecuted } from "./event-watchers/OptimisticPaymentExecuted";
+import { registerRoutes } from "./api/simple-router.js";
+import { watchTaskCompleted } from "./event-watchers/TaskCompleted.js";
+import { VerfiedContributor } from "./types/verified-contributor.js";
+import { MultischainWatcher } from "./openrd-indexer/utils/multichain-watcher.js";
+import { PersistentJson } from "./openrd-indexer/utils/persistent-json.js";
+import { Department } from "./types/department.js";
+import { Epoch } from "./types/score.js";
+import { watchVerifiedContributorTransfer } from "./event-watchers/VerifiedContributorTransfer.js";
+import { watchVerifiedContributorTagAdded } from "./event-watchers/VerifiedContributorTagAdded.js";
+import { watchVerifiedContributorTagRemoved } from "./event-watchers/VerifiedContributorTagRemoved.js";
+import { OptimisticPayment } from "./types/optimistic-payment.js";
+import { watchOptimisticPaymentCreated } from "./event-watchers/OptimisticPaymentCreated.js";
+import { watchOptimisticPaymentRejected } from "./event-watchers/OptimisticPaymentRejected.js";
+import { watchOptimisticPaymentExecuted } from "./event-watchers/OptimisticPaymentExecuted.js";
 
 export interface VerifiedContributorsStorage {
   [tokenId: string]: VerfiedContributor;

@@ -1,13 +1,13 @@
 import axios from "axios";
 import { Storage } from "..";
-import { TasksContract } from "../openrd-indexer/contracts/Tasks";
-import { TaskCompleted } from "../openrd-indexer/types/task-events";
-import { ContractWatcher } from "../openrd-indexer/utils/contract-watcher";
-import { parseBigInt } from "../openrd-indexer/utils/parseBigInt";
-import { createTokenScoreIfNotExists, getCurrentEpoch } from "./scoresHelpers";
-import { reviver } from "../openrd-indexer/utils/json";
-import { TaskReturn } from "../openrd-indexer/api/return-types";
-import { normalizeAddress } from "../openrd-indexer/event-watchers/userHelpers";
+import { TasksContract } from "../openrd-indexer/contracts/Tasks.js";
+import { TaskCompleted } from "../openrd-indexer/types/task-events.js";
+import { ContractWatcher } from "../openrd-indexer/utils/contract-watcher.js";
+import { parseBigInt } from "../openrd-indexer/utils/parseBigInt.js";
+import { createTokenScoreIfNotExists, getCurrentEpoch } from "./scoresHelpers.js";
+import { reviver } from "../openrd-indexer/utils/json.js";
+import { TaskReturn } from "../openrd-indexer/api/return-types.js";
+import { normalizeAddress } from "../openrd-indexer/event-watchers/userHelpers.js";
 
 export function watchTaskCompleted(contractWatcher: ContractWatcher, storage: Storage) {
   contractWatcher.startWatching("TaskCompleted", {

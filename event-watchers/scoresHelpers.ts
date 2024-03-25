@@ -1,5 +1,5 @@
 import { ScoresStorage } from "..";
-import { Epoch } from "../types/score";
+import { Epoch } from "../types/score.js";
 
 export function createTokenScoreIfNotExists(epoch: Epoch, tokenId: bigint): void {
   if (!epoch[tokenId.toString()]) {

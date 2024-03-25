@@ -1,7 +1,7 @@
 import { Hex } from "viem";
-import { Department } from "../types/department";
-import { VerfiedContributor } from "../types/verified-contributor";
-import { OptimisticPayment } from "../types/optimistic-payment";
+import { Department } from "../types/department.js";
+import { VerfiedContributor } from "../types/verified-contributor.js";
+import { OptimisticPayment } from "../types/optimistic-payment.js";
 
 export type VerifiedContributorReturn = VerfiedContributor;
 

@@ -1,9 +1,9 @@
 import { Storage } from "..";
-import { ContractWatcher } from "../openrd-indexer/utils/contract-watcher";
-import { OptimisticActionsContract } from "../contracts/OptimisticActions";
-import { createOptimsticPaymentIfNotExists } from "./optimsticPaymentHelpers";
-import { normalizeAddress } from "../openrd-indexer/event-watchers/userHelpers";
-import { fetchMetadata } from "../openrd-indexer/utils/metadata-fetch";
+import { ContractWatcher } from "../openrd-indexer/utils/contract-watcher.js";
+import { OptimisticActionsContract } from "../contracts/OptimisticActions.js";
+import { createOptimsticPaymentIfNotExists } from "./optimsticPaymentHelpers.js";
+import { normalizeAddress } from "../openrd-indexer/event-watchers/userHelpers.js";
+import { fetchMetadata } from "../openrd-indexer/utils/metadata-fetch.js";
 
 export interface OptimisticRejection {
   id: number;
