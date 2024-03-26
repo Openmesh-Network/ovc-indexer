@@ -5,17 +5,11 @@ import { OptimisticPayment } from "../types/optimistic-payment.js";
 
 export type VerifiedContributorReturn = VerfiedContributor;
 
-export type DepartmentReturn = Department;
-
 export type ScoreReturn = { score: number };
 
 export type OptimisticPaymentsReturn = { [requestId: number]: OptimisticPayment };
 
-export type DAORoleReturn = { role: bigint };
-
 export type LeaderboardReturn = { tokenId: bigint; score: number }[];
-
-export type DepartmentsReturn = { hash: Hex }[];
 
 export interface TotalVerifiedContributorsReturn {
   totalVerifiedContributors: number;

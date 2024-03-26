@@ -1,5 +1,5 @@
 import { Express, Response } from "express";
-import { isAddress, isHex, maxUint256, zeroAddress } from "viem";
+import { isAddress, maxUint256, zeroAddress } from "viem";
 
 import { Storage } from "..";
 import { replacer } from "../openrd-indexer/utils/json.js";
@@ -32,23 +32,6 @@ export function registerRoutes(app: Express, storage: Storage) {
     res.end(JSON.stringify(verifiedContributor, replacer));
   });
 
-  // Gets details of a single department
-  app.get(basePath + "department/:hash", async function (req, res) {
-    const hash = req.params.hash;
-    if (!isHex(hash)) {
-      return malformedRequest(res, "hash is not valid hex");
-    }
-
-    const departments = await storage.departments.get();
-    const department = departments[hash];
-    if (!department) {
-      res.statusCode = 404;
-      return res.end("Department not found");
-    }
-
-    res.end(JSON.stringify(department, replacer));
-  });
-
   // Gets the score of a single verified contributor
   app.get(basePath + "score/:tokenId", async function (req, res) {
     const tokenId = parseBigInt(req.params.tokenId);
@@ -79,23 +62,6 @@ export function registerRoutes(app: Express, storage: Storage) {
     res.end(JSON.stringify(daoOptimsiticPayments, replacer));
   });
 
-  // Gets the role to use for management interaction with a single dao
-  app.get(basePath + "daoRole/:dao", async function (req, res) {
-    const dao = req.params.dao;
-    if (!isAddress(dao)) {
-      return malformedRequest(res, "dao is not a valid address");
-    }
-
-    const daoRoles = await storage.daoRolesStorage.get();
-    const daoRole = daoRoles[dao];
-    if (!daoRole) {
-      res.statusCode = 404;
-      return res.end("Role for this dao not found");
-    }
-
-    res.end(JSON.stringify({ role: daoRole }, replacer));
-  });
-
   // Gets the all scores of verified contributors, sorted from high to low
   app.get(basePath + "leaderboard", async function (req, res) {
     const verifiedContributors = await storage.verifiedContributors.get();
@@ -118,16 +84,6 @@ export function registerRoutes(app: Express, storage: Storage) {
       .sort((vc1, vc2) => vc2.score - vc1.score);
 
     res.end(JSON.stringify(leaderboard, replacer));
-  });
-
-  // Gets all department hashes
-  app.get(basePath + "departments", async function (req, res) {
-    const departments = await storage.departments.get();
-    const hashes = Object.keys(departments).map((hash) => {
-      return { hash: hash };
-    });
-
-    res.end(JSON.stringify(hashes, replacer));
   });
 
   // Gets the total number of verified contributors

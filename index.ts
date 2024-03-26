@@ -9,7 +9,6 @@ import { watchTaskCompleted } from "./event-watchers/TaskCompleted.js";
 import { VerfiedContributor } from "./types/verified-contributor.js";
 import { MultischainWatcher } from "./openrd-indexer/utils/multichain-watcher.js";
 import { PersistentJson } from "./openrd-indexer/utils/persistent-json.js";
-import { Department } from "./types/department.js";
 import { Epoch } from "./types/score.js";
 import { watchVerifiedContributorTransfer } from "./event-watchers/VerifiedContributorTransfer.js";
 import { watchVerifiedContributorTagAdded } from "./event-watchers/VerifiedContributorTagAdded.js";
@@ -22,24 +21,16 @@ import { watchOptimisticPaymentExecuted } from "./event-watchers/OptimisticPayme
 export interface VerifiedContributorsStorage {
   [tokenId: string]: VerfiedContributor;
 }
-export interface DepartmentsStorage {
-  [hash: Hex]: Department;
-}
 export type ScoresStorage = Epoch[];
 export interface OptimisticPaymentsStorage {
   [dao: Address]: {
     [requestId: number]: OptimisticPayment;
   };
 }
-export interface DAORolesStorage {
-  [dao: Address]: bigint;
-}
 export interface Storage {
   verifiedContributors: PersistentJson<VerifiedContributorsStorage>;
-  departments: PersistentJson<DepartmentsStorage>;
   scores: PersistentJson<ScoresStorage>;
   optimisticPayments: PersistentJson<OptimisticPaymentsStorage>;
-  daoRolesStorage: PersistentJson<DAORolesStorage>;
 }
 
 async function start() {
@@ -68,33 +59,12 @@ async function start() {
     },
   ]);
 
-  const openmeshDepartments = [
-    {
-      name: "Smart Contracts Department",
-      dao: "0x7530bbf2c0684656f171aff4fdf93dacfc1189fd",
-      tag: keccak256(toBytes("SMARTCONTRACTS")),
-    },
-  ] as const;
   // Data (memory + json files (synced) currently, could be migrated to a database solution if needed in the future)
   await storageManager.init({ dir: "storage" });
   const storage: Storage = {
     verifiedContributors: new PersistentJson<VerifiedContributorsStorage>("verifiedContributors", {}),
-    departments: new PersistentJson<DepartmentsStorage>(
-      "departments",
-      openmeshDepartments.reduce((acc, value) => {
-        acc[value.tag] = { name: value.name, dao: value.dao };
-        return acc;
-      }, {} as DepartmentsStorage)
-    ),
     scores: new PersistentJson<ScoresStorage>("scores", []),
     optimisticPayments: new PersistentJson<OptimisticPaymentsStorage>("optimisticPayments", {}),
-    daoRolesStorage: new PersistentJson<DAORolesStorage>(
-      "daoRolesStorage",
-      openmeshDepartments.reduce((acc, value) => {
-        acc[value.dao] = BigInt(value.tag);
-        return acc;
-      }, {} as DAORolesStorage)
-    ),
   };
 
   multichainWatcher.forEach((contractWatcher) => {

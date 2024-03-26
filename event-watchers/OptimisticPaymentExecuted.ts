@@ -1,8 +1,8 @@
 import { Storage } from "..";
 import { ContractWatcher } from "../openrd-indexer/utils/contract-watcher.js";
 import { OptimisticActionsContract } from "../contracts/OptimisticActions.js";
-import { createOptimsticPaymentIfNotExists } from "./optimsticPaymentHelpers.js";
 import { normalizeAddress } from "../openrd-indexer/event-watchers/userHelpers.js";
+import { createOptimisticPaymentIfNotExists } from "./optimisticPaymentHelpers";
 
 export interface OptimisticExecution {
   id: number;
@@ -33,7 +33,7 @@ export function watchOptimisticPaymentExecuted(contractWatcher: ContractWatcher,
 export async function processOptimisticPaymentExecuted(event: OptimisticExecution, storage: Storage): Promise<void> {
   const dao = normalizeAddress(event.dao);
   await storage.optimisticPayments.update((optimisticPayments) => {
-    createOptimsticPaymentIfNotExists(optimisticPayments, dao, event.id);
+    createOptimisticPaymentIfNotExists(optimisticPayments, dao, event.id);
     optimisticPayments[dao][event.id].executed = true;
     optimisticPayments[dao][event.id].executor = event.executor;
   });

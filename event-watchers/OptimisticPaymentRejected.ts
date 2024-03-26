@@ -1,9 +1,9 @@
 import { Storage } from "..";
 import { ContractWatcher } from "../openrd-indexer/utils/contract-watcher.js";
 import { OptimisticActionsContract } from "../contracts/OptimisticActions.js";
-import { createOptimsticPaymentIfNotExists } from "./optimsticPaymentHelpers.js";
 import { normalizeAddress } from "../openrd-indexer/event-watchers/userHelpers.js";
 import { fetchMetadata } from "../openrd-indexer/utils/metadata-fetch.js";
+import { createOptimisticPaymentIfNotExists } from "./optimisticPaymentHelpers";
 
 export interface OptimisticRejection {
   id: number;
@@ -32,7 +32,7 @@ export function watchOptimisticPaymentRejected(contractWatcher: ContractWatcher,
 export async function processOptimisticPaymentRejected(event: OptimisticRejection, storage: Storage): Promise<void> {
   const dao = normalizeAddress(event.dao);
   await storage.optimisticPayments.update((optimisticPayments) => {
-    createOptimsticPaymentIfNotExists(optimisticPayments, dao, event.id);
+    createOptimisticPaymentIfNotExists(optimisticPayments, dao, event.id);
     optimisticPayments[dao][event.id].rejected = true;
     optimisticPayments[dao][event.id].rejectionMetadata = event.metadata;
   });
@@ -43,5 +43,5 @@ export async function processOptimisticPaymentRejected(event: OptimisticRejectio
         optimisticPayments[dao][event.id].cachedRejectionMetadata = metadata;
       })
     )
-    .catch((err) => console.error(`Error while fetching optimstic payment rejection metadata ${event.metadata} (${event.dao}-${event.id}): ${err}`));
+    .catch((err) => console.error(`Error while fetching optimistic payment rejection metadata ${event.metadata} (${event.dao}-${event.id}): ${err}`));
 }

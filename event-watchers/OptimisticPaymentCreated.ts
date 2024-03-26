@@ -1,10 +1,8 @@
-import { Address, Hex, decodeFunctionData } from "viem";
+import { Address, Hex } from "viem";
 import { Storage } from "..";
 import { ContractWatcher } from "../openrd-indexer/utils/contract-watcher.js";
 import { OptimisticActionsContract } from "../contracts/OptimisticActions.js";
-import { TasksContract } from "../openrd-indexer/contracts/Tasks.js";
-import { PaymentAction } from "../types/optimistic-payment.js";
-import { createOptimsticPaymentIfNotExists } from "./optimsticPaymentHelpers.js";
+import { createOptimisticPaymentIfNotExists } from "./optimisticPaymentHelpers.js";
 import { normalizeAddress } from "../openrd-indexer/event-watchers/userHelpers.js";
 import { fetchMetadata } from "../openrd-indexer/utils/metadata-fetch.js";
 
@@ -43,12 +41,11 @@ export function watchOptimisticPaymentCreated(contractWatcher: ContractWatcher, 
 
 export async function processOptimisticPaymentCreated(event: OptimisticAction, storage: Storage): Promise<void> {
   const dao = normalizeAddress(event.dao);
-  const actions = event.actions.map(toPaymentAction).filter((action) => action !== undefined) as PaymentAction[];
   await storage.optimisticPayments.update((optimisticPayments) => {
-    createOptimsticPaymentIfNotExists(optimisticPayments, dao, event.id);
+    createOptimisticPaymentIfNotExists(optimisticPayments, dao, event.id);
     optimisticPayments[dao][event.id].metadata = event.metadata;
     optimisticPayments[dao][event.id].executableFrom = event.executableFrom;
-    optimisticPayments[dao][event.id].actions = actions;
+    optimisticPayments[dao][event.id].actions = [...event.actions];
   });
 
   await fetchMetadata(event.metadata)
@@ -57,43 +54,5 @@ export async function processOptimisticPaymentCreated(event: OptimisticAction, s
         optimisticPayments[dao][event.id].cachedMetadata = metadata;
       })
     )
-    .catch((err) => console.error(`Error while fetching optimstic payment metadata ${event.metadata} (${event.dao}-${event.id}): ${err}`));
-}
-
-function toPaymentAction({ to, value, data }: { to: Address; value: bigint; data: Hex }): PaymentAction | undefined {
-  // Ignores most actions (as those should not have permission to execute anyhow and we do not know how to decode them)
-  if (normalizeAddress(to) !== normalizeAddress(TasksContract.address)) {
-    return undefined;
-  }
-
-  const action = decodeFunctionData({
-    abi: TasksContract.abi,
-    data: data,
-  });
-
-  if (action.functionName === "partialPayment") {
-    return {
-      type: "partialPayment",
-      taskId: action.args[0],
-      partialNativePayment: [...action.args[1]],
-      partialPayment: [...action.args[2]],
-    };
-  }
-  if (action.functionName === "increaseBudget") {
-    return {
-      type: "budgetIncrease",
-      taskId: action.args[0],
-      nativeBudgetIncrease: value,
-      budgetIncrease: [...action.args[1]],
-    };
-  }
-  if (action.functionName === "extendDeadline") {
-    return {
-      type: "deadlineExtension",
-      taskId: action.args[0],
-      deadlineExtension: action.args[1],
-    };
-  }
-
-  return undefined;
+    .catch((err) => console.error(`Error while fetching optimistic payment metadata ${event.metadata} (${event.dao}-${event.id}): ${err}`));
 }
