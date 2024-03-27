@@ -2,7 +2,7 @@ import { Storage } from "..";
 import { ContractWatcher } from "../openrd-indexer/utils/contract-watcher.js";
 import { OptimisticActionsContract } from "../contracts/OptimisticActions.js";
 import { normalizeAddress } from "../openrd-indexer/event-watchers/userHelpers.js";
-import { createOptimisticPaymentIfNotExists } from "./optimisticPaymentHelpers";
+import { createOptimisticPaymentIfNotExists } from "./optimisticPaymentHelpers.js";
 
 export interface OptimisticExecution {
   id: number;

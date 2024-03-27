@@ -1,15 +1,11 @@
 export const OptimisticActionsContract = {
-  address: "0x9863b54A09672C21961802B5527Cd8Dc80e6637D",
+  address: "0x86DC03c6D6ead35Ffe6300Eb8130Dac069DbC804",
   abi: [
     {
       type: "function",
       name: "createAction",
       inputs: [
-        {
-          name: "_manager",
-          type: "address",
-          internalType: "contract IDAOManager",
-        },
+        { name: "_manager", type: "address", internalType: "contract IDAOManager" },
         { name: "_role", type: "uint256", internalType: "uint256" },
         {
           name: "_actions",
@@ -85,24 +81,9 @@ export const OptimisticActionsContract = {
       name: "ActionCreated",
       inputs: [
         { name: "id", type: "uint32", indexed: true, internalType: "uint32" },
-        {
-          name: "dao",
-          type: "address",
-          indexed: true,
-          internalType: "contract IDAO",
-        },
-        {
-          name: "manager",
-          type: "address",
-          indexed: false,
-          internalType: "contract IDAOManager",
-        },
-        {
-          name: "role",
-          type: "uint256",
-          indexed: false,
-          internalType: "uint256",
-        },
+        { name: "dao", type: "address", indexed: true, internalType: "contract IDAO" },
+        { name: "manager", type: "address", indexed: false, internalType: "contract IDAOManager" },
+        { name: "role", type: "uint256", indexed: false, internalType: "uint256" },
         {
           name: "actions",
           type: "tuple[]",
@@ -114,24 +95,9 @@ export const OptimisticActionsContract = {
             { name: "data", type: "bytes", internalType: "bytes" },
           ],
         },
-        {
-          name: "failureMap",
-          type: "uint256",
-          indexed: false,
-          internalType: "uint256",
-        },
-        {
-          name: "metadata",
-          type: "string",
-          indexed: false,
-          internalType: "string",
-        },
-        {
-          name: "executableFrom",
-          type: "uint64",
-          indexed: false,
-          internalType: "uint64",
-        },
+        { name: "failureMap", type: "uint256", indexed: false, internalType: "uint256" },
+        { name: "metadata", type: "string", indexed: false, internalType: "string" },
+        { name: "executableFrom", type: "uint64", indexed: false, internalType: "uint64" },
       ],
       anonymous: false,
     },
@@ -140,30 +106,10 @@ export const OptimisticActionsContract = {
       name: "ActionExecuted",
       inputs: [
         { name: "id", type: "uint32", indexed: true, internalType: "uint32" },
-        {
-          name: "dao",
-          type: "address",
-          indexed: true,
-          internalType: "contract IDAO",
-        },
-        {
-          name: "executor",
-          type: "address",
-          indexed: true,
-          internalType: "address",
-        },
-        {
-          name: "returnValues",
-          type: "bytes[]",
-          indexed: false,
-          internalType: "bytes[]",
-        },
-        {
-          name: "failureMap",
-          type: "uint256",
-          indexed: false,
-          internalType: "uint256",
-        },
+        { name: "dao", type: "address", indexed: true, internalType: "contract IDAO" },
+        { name: "executor", type: "address", indexed: true, internalType: "address" },
+        { name: "returnValues", type: "bytes[]", indexed: false, internalType: "bytes[]" },
+        { name: "failureMap", type: "uint256", indexed: false, internalType: "uint256" },
       ],
       anonymous: false,
     },
@@ -172,18 +118,8 @@ export const OptimisticActionsContract = {
       name: "ActionRejected",
       inputs: [
         { name: "id", type: "uint32", indexed: true, internalType: "uint32" },
-        {
-          name: "dao",
-          type: "address",
-          indexed: true,
-          internalType: "contract IDAO",
-        },
-        {
-          name: "metadata",
-          type: "string",
-          indexed: false,
-          internalType: "string",
-        },
+        { name: "dao", type: "address", indexed: true, internalType: "contract IDAO" },
+        { name: "metadata", type: "string", indexed: false, internalType: "string" },
       ],
       anonymous: false,
     },
@@ -191,18 +127,8 @@ export const OptimisticActionsContract = {
       type: "event",
       name: "AdminSet",
       inputs: [
-        {
-          name: "dao",
-          type: "address",
-          indexed: true,
-          internalType: "contract IDAO",
-        },
-        {
-          name: "admin",
-          type: "address",
-          indexed: false,
-          internalType: "address",
-        },
+        { name: "dao", type: "address", indexed: true, internalType: "contract IDAO" },
+        { name: "admin", type: "address", indexed: false, internalType: "address" },
       ],
       anonymous: false,
     },
@@ -210,18 +136,8 @@ export const OptimisticActionsContract = {
       type: "event",
       name: "ExecuteDelaySet",
       inputs: [
-        {
-          name: "dao",
-          type: "address",
-          indexed: true,
-          internalType: "contract IDAO",
-        },
-        {
-          name: "executeDelay",
-          type: "uint64",
-          indexed: false,
-          internalType: "uint64",
-        },
+        { name: "dao", type: "address", indexed: true, internalType: "contract IDAO" },
+        { name: "executeDelay", type: "uint64", indexed: false, internalType: "uint64" },
       ],
       anonymous: false,
     },

@@ -1,25 +1,15 @@
 export const VerifiedContributorTagManagerContract = {
-  address: "0x5E11CD5865ac438e4C5E3bB9EC160bAC541fD1Af",
+  address: "0x184d2cc273013bdeCDC57d2E7382f4d2795476a0",
   abi: [
     {
       type: "constructor",
       inputs: [
-        {
-          name: "_collection",
-          type: "address",
-          internalType: "contract IERC721",
-        },
+        { name: "_collection", type: "address", internalType: "contract IERC721" },
         { name: "_admin", type: "address", internalType: "address" },
       ],
       stateMutability: "nonpayable",
     },
-    {
-      type: "function",
-      name: "DEFAULT_ADMIN_ROLE",
-      inputs: [],
-      outputs: [{ name: "", type: "bytes32", internalType: "bytes32" }],
-      stateMutability: "view",
-    },
+    { type: "function", name: "DEFAULT_ADMIN_ROLE", inputs: [], outputs: [{ name: "", type: "bytes32", internalType: "bytes32" }], stateMutability: "view" },
     {
       type: "function",
       name: "addTag",
@@ -92,11 +82,7 @@ export const VerifiedContributorTagManagerContract = {
       name: "renounceRole",
       inputs: [
         { name: "role", type: "bytes32", internalType: "bytes32" },
-        {
-          name: "callerConfirmation",
-          type: "address",
-          internalType: "address",
-        },
+        { name: "callerConfirmation", type: "address", internalType: "address" },
       ],
       outputs: [],
       stateMutability: "nonpayable",
@@ -111,13 +97,7 @@ export const VerifiedContributorTagManagerContract = {
       outputs: [],
       stateMutability: "nonpayable",
     },
-    {
-      type: "function",
-      name: "setId",
-      inputs: [{ name: "tokenId", type: "uint256", internalType: "uint256" }],
-      outputs: [],
-      stateMutability: "nonpayable",
-    },
+    { type: "function", name: "setId", inputs: [{ name: "tokenId", type: "uint256", internalType: "uint256" }], outputs: [], stateMutability: "nonpayable" },
     {
       type: "function",
       name: "setRoleAdmin",
@@ -146,24 +126,9 @@ export const VerifiedContributorTagManagerContract = {
       type: "event",
       name: "RoleAdminChanged",
       inputs: [
-        {
-          name: "role",
-          type: "bytes32",
-          indexed: true,
-          internalType: "bytes32",
-        },
-        {
-          name: "previousAdminRole",
-          type: "bytes32",
-          indexed: true,
-          internalType: "bytes32",
-        },
-        {
-          name: "newAdminRole",
-          type: "bytes32",
-          indexed: true,
-          internalType: "bytes32",
-        },
+        { name: "role", type: "bytes32", indexed: true, internalType: "bytes32" },
+        { name: "previousAdminRole", type: "bytes32", indexed: true, internalType: "bytes32" },
+        { name: "newAdminRole", type: "bytes32", indexed: true, internalType: "bytes32" },
       ],
       anonymous: false,
     },
@@ -171,24 +136,9 @@ export const VerifiedContributorTagManagerContract = {
       type: "event",
       name: "RoleGranted",
       inputs: [
-        {
-          name: "role",
-          type: "bytes32",
-          indexed: true,
-          internalType: "bytes32",
-        },
-        {
-          name: "account",
-          type: "address",
-          indexed: true,
-          internalType: "address",
-        },
-        {
-          name: "sender",
-          type: "address",
-          indexed: true,
-          internalType: "address",
-        },
+        { name: "role", type: "bytes32", indexed: true, internalType: "bytes32" },
+        { name: "account", type: "address", indexed: true, internalType: "address" },
+        { name: "sender", type: "address", indexed: true, internalType: "address" },
       ],
       anonymous: false,
     },
@@ -196,24 +146,9 @@ export const VerifiedContributorTagManagerContract = {
       type: "event",
       name: "RoleRevoked",
       inputs: [
-        {
-          name: "role",
-          type: "bytes32",
-          indexed: true,
-          internalType: "bytes32",
-        },
-        {
-          name: "account",
-          type: "address",
-          indexed: true,
-          internalType: "address",
-        },
-        {
-          name: "sender",
-          type: "address",
-          indexed: true,
-          internalType: "address",
-        },
+        { name: "role", type: "bytes32", indexed: true, internalType: "bytes32" },
+        { name: "account", type: "address", indexed: true, internalType: "address" },
+        { name: "sender", type: "address", indexed: true, internalType: "address" },
       ],
       anonymous: false,
     },
@@ -221,18 +156,8 @@ export const VerifiedContributorTagManagerContract = {
       type: "event",
       name: "TagAdded",
       inputs: [
-        {
-          name: "tokenId",
-          type: "uint256",
-          indexed: false,
-          internalType: "uint256",
-        },
-        {
-          name: "tag",
-          type: "bytes32",
-          indexed: false,
-          internalType: "bytes32",
-        },
+        { name: "tokenId", type: "uint256", indexed: false, internalType: "uint256" },
+        { name: "tag", type: "bytes32", indexed: false, internalType: "bytes32" },
       ],
       anonymous: false,
     },
@@ -240,18 +165,8 @@ export const VerifiedContributorTagManagerContract = {
       type: "event",
       name: "TagRemoved",
       inputs: [
-        {
-          name: "tokenId",
-          type: "uint256",
-          indexed: false,
-          internalType: "uint256",
-        },
-        {
-          name: "tag",
-          type: "bytes32",
-          indexed: false,
-          internalType: "bytes32",
-        },
+        { name: "tokenId", type: "uint256", indexed: false, internalType: "uint256" },
+        { name: "tag", type: "bytes32", indexed: false, internalType: "bytes32" },
       ],
       anonymous: false,
     },
@@ -280,10 +195,6 @@ export const VerifiedContributorTagManagerContract = {
         { name: "tag", type: "bytes32", internalType: "bytes32" },
       ],
     },
-    {
-      type: "error",
-      name: "TokenNotBurned",
-      inputs: [{ name: "tokenId", type: "uint256", internalType: "uint256" }],
-    },
+    { type: "error", name: "TokenNotBurned", inputs: [{ name: "tokenId", type: "uint256", internalType: "uint256" }] },
   ],
 } as const;

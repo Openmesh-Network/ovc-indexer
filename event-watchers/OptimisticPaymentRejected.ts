@@ -3,7 +3,7 @@ import { ContractWatcher } from "../openrd-indexer/utils/contract-watcher.js";
 import { OptimisticActionsContract } from "../contracts/OptimisticActions.js";
 import { normalizeAddress } from "../openrd-indexer/event-watchers/userHelpers.js";
 import { fetchMetadata } from "../openrd-indexer/utils/metadata-fetch.js";
-import { createOptimisticPaymentIfNotExists } from "./optimisticPaymentHelpers";
+import { createOptimisticPaymentIfNotExists } from "./optimisticPaymentHelpers.js";
 
 export interface OptimisticRejection {
   id: number;
