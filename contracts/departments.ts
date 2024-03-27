@@ -22,8 +22,8 @@ export const departments = [
     name: "Expert Network",
     description: "Openmesh Expert Network",
     tag: keccak256(toBytes("EXPERTTEST")),
-    smart_account: deployment.smartAccounts.departments.coreMemberDepartment,
-    crosschain_account: deployment.crossChainDepartments.coreMemberDepartment,
-    dao: deployment.departments.departmentDaos.coreMemberDepartment,
+    smart_account: deployment.smartAccounts.departments.expertDepartment,
+    crosschain_account: deployment.crossChainDepartments.expertDepartment,
+    dao: deployment.departments.departmentDaos.expertDepartment,
   },
 ] as const;
