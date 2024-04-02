@@ -13,24 +13,14 @@ import { Epoch } from "./types/score.js";
 import { watchVerifiedContributorTransfer } from "./event-watchers/VerifiedContributorTransfer.js";
 import { watchVerifiedContributorTagAdded } from "./event-watchers/VerifiedContributorTagAdded.js";
 import { watchVerifiedContributorTagRemoved } from "./event-watchers/VerifiedContributorTagRemoved.js";
-import { OptimisticPayment } from "./types/optimistic-payment.js";
-import { watchOptimisticPaymentCreated } from "./event-watchers/OptimisticPaymentCreated.js";
-import { watchOptimisticPaymentRejected } from "./event-watchers/OptimisticPaymentRejected.js";
-import { watchOptimisticPaymentExecuted } from "./event-watchers/OptimisticPaymentExecuted.js";
 
 export interface VerifiedContributorsStorage {
   [tokenId: string]: VerfiedContributor;
 }
 export type ScoresStorage = Epoch[];
-export interface OptimisticPaymentsStorage {
-  [dao: Address]: {
-    [requestId: number]: OptimisticPayment;
-  };
-}
 export interface Storage {
   verifiedContributors: PersistentJson<VerifiedContributorsStorage>;
   scores: PersistentJson<ScoresStorage>;
-  optimisticPayments: PersistentJson<OptimisticPaymentsStorage>;
 }
 
 async function start() {
@@ -64,7 +54,6 @@ async function start() {
   const storage: Storage = {
     verifiedContributors: new PersistentJson<VerifiedContributorsStorage>("verifiedContributors", {}),
     scores: new PersistentJson<ScoresStorage>("scores", []),
-    optimisticPayments: new PersistentJson<OptimisticPaymentsStorage>("optimisticPayments", {}),
   };
 
   multichainWatcher.forEach((contractWatcher) => {
@@ -74,11 +63,6 @@ async function start() {
       watchVerifiedContributorTransfer(contractWatcher, storage);
       watchVerifiedContributorTagAdded(contractWatcher, storage);
       watchVerifiedContributorTagRemoved(contractWatcher, storage);
-
-      // Departments are only on this chain
-      watchOptimisticPaymentCreated(contractWatcher, storage);
-      watchOptimisticPaymentRejected(contractWatcher, storage);
-      watchOptimisticPaymentExecuted(contractWatcher, storage);
     }
   });
 
