@@ -33,7 +33,7 @@ export const deployment = {
       verifiedContributor: "0x8dEE881f3F6E0b65A06c2c2F8CF6bAc612aA84C7",
     },
     verifiedContributorTagManager: "0x6e80EDE1FfC56603098970a159b5794B34baD1aC",
-    verifiedContributorCountTrustlessManagement: "0xD31827AB103E4067c19094D06B7b6FD3650922a3",
+    verifiedContributorCountTrustlessManagement: "0x98bEb83F02D7ce3E32934cfAf3b0561cA4FBCb45",
     verifiedContributorTagTrustlessManagement: "0x3A2A4C006a174FF3bC0913f8Df4d3De00CC90832",
     departmentDaos: {
       departmentFactory: {
