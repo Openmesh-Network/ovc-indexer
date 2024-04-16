@@ -1,8 +1,7 @@
 import { config as loadEnv } from "dotenv";
 import express from "express";
 import storageManager from "node-persist";
-import { Address, Hex, keccak256, toBytes } from "viem";
-import { mainnet, polygon, polygonMumbai, sepolia } from "viem/chains";
+import { arbitrumSepolia, mainnet, polygon, polygonMumbai, sepolia } from "viem/chains";
 
 import { registerRoutes } from "./api/simple-router.js";
 import { watchTaskCompleted } from "./event-watchers/TaskCompleted.js";
@@ -33,19 +32,19 @@ async function start() {
   const multichainWatcher = new MultischainWatcher([
     {
       chain: mainnet,
-      infuraPrefix: "mainnet",
+      rpc: `mainnet.infura.io/ws/v3/${process.env.INFURA_API_KEY}`,
     },
     {
       chain: sepolia,
-      infuraPrefix: "sepolia",
+      rpc: `sepolia.infura.io/ws/v3/${process.env.INFURA_API_KEY}`,
     },
     {
       chain: polygon,
-      infuraPrefix: "polygon-mainnet",
+      rpc: `polygon-mainnet.infura.io/ws/v3/${process.env.INFURA_API_KEY}`,
     },
     {
-      chain: polygonMumbai,
-      infuraPrefix: "polygon-mumbai",
+      chain: arbitrumSepolia,
+      rpc: `arbitrum-sepolia.infura.io/ws/v3/${process.env.INFURA_API_KEY}`,
     },
   ]);
 

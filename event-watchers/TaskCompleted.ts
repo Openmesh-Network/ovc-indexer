@@ -37,7 +37,7 @@ export function watchTaskCompleted(contractWatcher: ContractWatcher, storage: St
 }
 
 export async function processTaskCompleted(event: TaskCompleted, storage: Storage): Promise<void> {
-  // query openrd-indexer to get executor
+  // query openrd-indexer to get executor and usd value
   const response = await axios.get(`https://openrd.plopmenz.com/indexer/task/${event.chainId}/${event.taskId}`);
   if (response.status !== 200) {
     throw new Error(`Fetching task details failed for ${event.chainId}:${event.taskId}: ${JSON.stringify(response.data)}`);
