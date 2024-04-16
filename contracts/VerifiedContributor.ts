@@ -1,5 +1,5 @@
 export const VerifiedContributorContract = {
-  address: "0x23cdba70470C2D119396fD5584b3e362727FcE4C",
+  address: "0x8dEE881f3F6E0b65A06c2c2F8CF6bAc612aA84C7",
   abi: [
     { type: "constructor", inputs: [], stateMutability: "nonpayable" },
     {
@@ -277,9 +277,7 @@ export const VerifiedContributorContract = {
     {
       type: "function",
       name: "supportsInterface",
-      inputs: [
-        { name: "_interfaceId", type: "bytes4", internalType: "bytes4" },
-      ],
+      inputs: [{ name: "_interfaceId", type: "bytes4", internalType: "bytes4" }],
       outputs: [{ name: "", type: "bool", internalType: "bool" }],
       stateMutability: "view",
     },
@@ -335,9 +333,7 @@ export const VerifiedContributorContract = {
     {
       type: "function",
       name: "updateMetadata",
-      inputs: [
-        { name: "_metadataUri", type: "string", internalType: "string" },
-      ],
+      inputs: [{ name: "_metadataUri", type: "string", internalType: "string" }],
       outputs: [],
       stateMutability: "nonpayable",
     },
