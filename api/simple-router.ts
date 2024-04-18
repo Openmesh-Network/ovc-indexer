@@ -69,6 +69,23 @@ export function registerRoutes(app: Express, storage: Storage) {
     res.end(JSON.stringify(leaderboard, replacer));
   });
 
+  // Gets information about a certain account
+  app.get(basePath + "user/:address", async function (req, res) {
+    const address = req.params.address;
+    if (!address || !isAddress(address)) {
+      return malformedRequest(res, "address is not a valid address");
+    }
+
+    const verifiedContributors = await storage.verifiedContributors.get();
+    const user = {
+      verifiedContributors: Object.keys(verifiedContributors).filter(
+        (tokenId) => normalizeAddress(verifiedContributors[tokenId].owner) === normalizeAddress(address)
+      ),
+    };
+
+    res.end(JSON.stringify(user, replacer));
+  });
+
   // Gets the total number of verified contributors
   app.get(basePath + "totalVerifiedContributors", async function (req, res) {
     const verifiedContributors = await storage.verifiedContributors.get();
