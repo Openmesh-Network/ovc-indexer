@@ -1,7 +1,7 @@
 import { config as loadEnv } from "dotenv";
 import express from "express";
 import storageManager from "node-persist";
-import { arbitrumSepolia, mainnet, polygon, polygonMumbai, sepolia } from "viem/chains";
+import { arbitrumSepolia, mainnet, polygon, sepolia } from "viem/chains";
 
 import { registerRoutes } from "./api/simple-router.js";
 import { watchTaskCompleted } from "./event-watchers/TaskCompleted.js";
@@ -35,10 +35,6 @@ async function start() {
       rpc: `mainnet.infura.io/ws/v3/${process.env.INFURA_API_KEY}`,
     },
     {
-      chain: sepolia,
-      rpc: `sepolia.infura.io/ws/v3/${process.env.INFURA_API_KEY}`,
-    },
-    {
       chain: polygon,
       rpc: `polygon-mainnet.infura.io/ws/v3/${process.env.INFURA_API_KEY}`,
     },
@@ -57,7 +53,7 @@ async function start() {
 
   multichainWatcher.forEach((contractWatcher) => {
     watchTaskCompleted(contractWatcher, storage);
-    if (contractWatcher.chain.id === polygonMumbai.id) {
+    if (contractWatcher.chain.id === arbitrumSepolia.id) {
       // Verified Contributors is only deployed on this chain
       watchVerifiedContributorTransfer(contractWatcher, storage);
       watchVerifiedContributorTagAdded(contractWatcher, storage);
