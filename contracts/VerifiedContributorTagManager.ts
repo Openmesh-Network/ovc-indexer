@@ -1,5 +1,5 @@
 export const VerifiedContributorTagManagerContract = {
-  address: "0x6e80EDE1FfC56603098970a159b5794B34baD1aC",
+  address: "0x1E4FA7E3297174467FC688aefFbEA602D3594e97",
   abi: [
     {
       type: "constructor",

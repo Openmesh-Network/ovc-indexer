@@ -1,5 +1,5 @@
 export const VerifiedContributorContract = {
-  address: "0x8dEE881f3F6E0b65A06c2c2F8CF6bAc612aA84C7",
+  address: "0x5D69236b32dac44371d8CEA1f6bdC06427756Ac9",
   abi: [
     { type: "constructor", inputs: [], stateMutability: "nonpayable" },
     {
