@@ -5,7 +5,7 @@ export const deployment = {
       taskDisputes: "0x945E13855cC61F33373Ec7D42eD30D800A832377",
       taskDrafts: "0x1DC2017f07a1996dA3F093c11570dE038088DCa4",
     },
-    openRFP: { RFPs: "0x6Fa945AeaA0a5E80F79eff0BC06F0244412A3035" },
+    openRFP: { RFPs: "0x9687C4dcBf62f6D8400c17A3ec545C70b1a50A20" },
   },
   smartAccounts: {
     openmeshAdmin: { admin: "0x24496D746Fd003397790E41d0d1Ce61F4F7fd61f" },
@@ -34,30 +34,30 @@ export const deployment = {
     verifiedContributorTagTrustlessManagement: "0x2018fEE841AB523B1dF4cD4E817D42de8bD08279",
     departmentDaos: {
       departmentFactory: {
-        departmentFactory: "0x904e76EFA903cb705Bb1583e16a6e73EF69EAde9",
+        departmentFactory: "0xb926c30B44490378CF2b77b72edf375c3cB97821",
         departmentOwner: {
-          dao: "0xe420e7028AF915F3C31c65E69918bA6850DE2e32",
-          tokenVoting: "0xd84dd47d26fd5002f8F4e556F9f99632da62FDEb",
+          dao: "0x053a28A9Ffd76253379759df5e5b41466cD13804",
+          tokenVoting: "0x0dD6602A3B5e717290af3e21B6Ea9645802fd828",
         },
       },
       smartAccountDepartmentInstaller: "0x04650A981d4423Cf1450e32DBd6e659406241a82",
       disputeDepartment: {
-        dao: "0x8BB008F981e9411DB4A83188171B5B4d0a20e26E",
+        dao: "0x821918F1e999DdE5CDF21f01Db7A8aC653870CDF",
         tagVoting: "0x6b1FA2E156F323308311CE75781212A85f80E682",
       },
       coreMemberDepartment: {
-        dao: "0x669820bea2104aBc9ab8dD77630eE0b19a7c25a8",
+        dao: "0x36e72B6dB7b951C6C9B5A64c6dF04d91719ffd6A",
         tagVoting: "0x69750d3844d5494b723cd307867D7e28c6ABED7C",
       },
       expertDepartment: {
-        dao: "0xB1047525C96101644Cd7877e4D52D9D1E4516Cf0",
+        dao: "0x592206A227Da7c8DBFA553b97B1f1f6E2E190C37",
         tagVoting: "0xa81238C6d6a8C7aA7Ed0f7A85889279ba47c9828",
       },
     },
   },
   crossChainDepartments: {
-    disputeDepartment: "0x03628995BEDeb8E971C4bB96DB294A70396E1697",
-    coreMemberDepartment: "0x691053Dd68c5B3CD7991d235f95f9801E24B100F",
-    expertDepartment: "0x0B919a82515b56768d439AF1888D7A5C31379514",
+    disputeDepartment: "0xA651332Bf73905c326bdA4549A59c05Aa3bF7DA0",
+    coreMemberDepartment: "0xE520f941def9FeA4BE3e616E8489e2eA1fe23DaB",
+    expertDepartment: "0xd0Ec91D5389b63E4d1faa59269366233b4050235",
   },
 } as const;
