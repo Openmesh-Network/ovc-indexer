@@ -3,7 +3,7 @@ import { Storage } from "..";
 import { VerifiedContributorContract } from "../contracts/VerifiedContributor.js";
 import { ContractWatcher } from "../openrd-indexer/utils/contract-watcher.js";
 import { createVerifiedContributorIfNotExists } from "./verifiedContributorHelpers.js";
-import { normalizeAddress } from "../openrd-indexer/event-watchers/userHelpers.js";
+import { normalizeAddress } from "../openrd-indexer/utils/normalize-address.js";
 
 export interface Transfer {
   from: Address;

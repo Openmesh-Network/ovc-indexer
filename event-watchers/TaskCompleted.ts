@@ -7,7 +7,7 @@ import { parseBigInt } from "../openrd-indexer/utils/parseBigInt.js";
 import { createTokenScoreIfNotExists, getCurrentEpoch } from "./scoresHelpers.js";
 import { reviver } from "../openrd-indexer/utils/json.js";
 import { TaskReturn } from "../openrd-indexer/api/return-types.js";
-import { normalizeAddress } from "../openrd-indexer/event-watchers/userHelpers.js";
+import { normalizeAddress } from "../openrd-indexer/utils/normalize-address.js";
 
 export function watchTaskCompleted(contractWatcher: ContractWatcher, storage: Storage) {
   contractWatcher.startWatching("TaskCompleted", {

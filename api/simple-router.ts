@@ -5,7 +5,7 @@ import { Storage } from "..";
 import { replacer } from "../openrd-indexer/utils/json.js";
 import { parseBigInt } from "../openrd-indexer/utils/parseBigInt.js";
 import { calculateScore } from "../utils/score-calculator.js";
-import { normalizeAddress } from "../openrd-indexer/event-watchers/userHelpers.js";
+import { normalizeAddress } from "../openrd-indexer/utils/normalize-address.js";
 
 function malformedRequest(res: Response, error: string): void {
   res.statusCode = 400;
