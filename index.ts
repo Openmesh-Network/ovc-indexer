@@ -60,12 +60,17 @@ async function start() {
     }
   });
 
-  process.on("SIGINT", function () {
+  process.on("SIGINT", async () => {
     console.log("Stopping...");
 
     multichainWatcher.forEach((contractWatcher) => {
       contractWatcher.stopAll();
     });
+    await Promise.all(
+      Object.values(storage).map((storageItem) => {
+        storageItem.update(() => {}); // Save all memory values to disk
+      })
+    );
     process.exit();
   });
 
