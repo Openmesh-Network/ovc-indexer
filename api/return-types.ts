@@ -1,6 +1,6 @@
-import { VerfiedContributor } from "../types/verified-contributor.js";
+import { VerifiedContributor } from "../types/verified-contributor.js";
 
-export type VerifiedContributorReturn = VerfiedContributor;
+export type VerifiedContributorReturn = VerifiedContributor;
 
 export type ScoreReturn = { score: number };
 

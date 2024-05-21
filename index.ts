@@ -5,7 +5,7 @@ import { mainnet, polygon } from "viem/chains";
 
 import { registerRoutes } from "./api/simple-router.js";
 import { watchTaskCompleted } from "./event-watchers/TaskCompleted.js";
-import { VerfiedContributor } from "./types/verified-contributor.js";
+import { VerifiedContributor } from "./types/verified-contributor.js";
 import { MultichainWatcher } from "./openrd-indexer/utils/multichain-watcher.js";
 import { PersistentJson } from "./openrd-indexer/utils/persistent-json.js";
 import { Epoch } from "./types/score.js";
@@ -17,7 +17,7 @@ import { VerifiedContributorTagManagerContract } from "./contracts/VerifiedContr
 import { historySync } from "./openrd-indexer/utils/history-sync.js";
 
 export interface VerifiedContributorsStorage {
-  [tokenId: string]: VerfiedContributor;
+  [tokenId: string]: VerifiedContributor;
 }
 export type ScoresStorage = Epoch[];
 export interface Storage {
@@ -68,7 +68,7 @@ async function start() {
     });
     await Promise.all(
       Object.values(storage).map((storageItem) => {
-        storageItem.update(() => {}); // Save all memory values to disk
+        return storageItem.update(() => {}); // Save all memory values to disk
       })
     );
     process.exit();

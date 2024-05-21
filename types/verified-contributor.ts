@@ -1,6 +1,6 @@
 import { Address, Hex } from "viem";
 
-export interface VerfiedContributor {
+export interface VerifiedContributor {
   owner: Address;
   tags: Hex[]; // e.g. Departments
 }
