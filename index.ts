@@ -12,6 +12,9 @@ import { Epoch } from "./types/score.js";
 import { watchVerifiedContributorTransfer } from "./event-watchers/VerifiedContributorTransfer.js";
 import { watchVerifiedContributorTagAdded } from "./event-watchers/VerifiedContributorTagAdded.js";
 import { watchVerifiedContributorTagRemoved } from "./event-watchers/VerifiedContributorTagRemoved.js";
+import { VerifiedContributorContract } from "./contracts/VerifiedContributor.js";
+import { VerifiedContributorTagManagerContract } from "./contracts/VerifiedContributorTagManager.js";
+import { historySync } from "./openrd-indexer/utils/history-sync.js";
 
 export interface VerifiedContributorsStorage {
   [tokenId: string]: VerfiedContributor;
@@ -75,6 +78,26 @@ async function start() {
     var host = addressInfo.address;
     var port = addressInfo.port;
     console.log(`Webserver started on ${host}:${port}`);
+  });
+
+  process.stdin.resume();
+
+  process.stdin.on("data", (input) => {
+    try {
+      const command = input.toString();
+      if (command.startsWith("sync ")) {
+        // In case some event logs were missed
+        const args = command.split(" ").slice(1);
+        const chainId = Number(args[0]);
+        const fromBlock = BigInt(args[1]);
+        const toBlock = BigInt(args[2]);
+        historySync(multichainWatcher, chainId, fromBlock, toBlock, [VerifiedContributorContract.address, VerifiedContributorTagManagerContract.address]).catch(
+          (err) => console.error(`Error while executing history sync: ${err}`)
+        );
+      }
+    } catch (err) {
+      console.error(`Error interpreting command: ${err}`);
+    }
   });
 }
 
