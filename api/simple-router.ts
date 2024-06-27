@@ -1,11 +1,12 @@
-import { Express, Response } from "express";
-import { isAddress, maxUint256, zeroAddress } from "viem";
+import { Express, Response, json } from "express";
+import { Address, isAddress, maxUint256, zeroAddress } from "viem";
 
 import { Storage } from "..";
-import { replacer } from "../openrd-indexer/utils/json.js";
+import { replacer, reviver } from "../openrd-indexer/utils/json.js";
 import { parseBigInt } from "../openrd-indexer/utils/parseBigInt.js";
 import { calculateScore } from "../utils/score-calculator.js";
 import { normalizeAddress } from "../openrd-indexer/utils/normalize-address.js";
+import { ClaimRequest } from "../types/requests";
 
 function malformedRequest(res: Response, error: string): void {
   res.statusCode = 400;
@@ -14,6 +15,7 @@ function malformedRequest(res: Response, error: string): void {
 
 export function registerRoutes(app: Express, storage: Storage) {
   const basePath = "/indexer/";
+  app.use(json());
 
   // Gets details of a single verified contributor
   app.get(basePath + "verifiedContributor/:tokenId", async function (req, res) {
@@ -92,5 +94,57 @@ export function registerRoutes(app: Express, storage: Storage) {
     const totalVerifiedContributors = Object.values(verifiedContributors).filter((vc) => vc.owner !== normalizeAddress(zeroAddress)).length;
 
     res.end(JSON.stringify({ totalVerifiedContributors: totalVerifiedContributors }, replacer));
+  });
+
+  // Gets all claim requests of a single user
+  app.get(basePath + "claimRequest/:address", async function (req, res) {
+    const address = req.params.address;
+    if (!address || !isAddress(address)) {
+      return malformedRequest(res, "address is not a valid address");
+    }
+
+    const claimRequests = await storage.claimRequests.get();
+    const userRequests = claimRequests.filter((req) => normalizeAddress(req.receiver as Address) === normalizeAddress(address));
+
+    res.end(JSON.stringify(userRequests, replacer));
+  });
+
+  // Gets all pending claim requests
+  app.get(basePath + "claimRequests", async function (req, res) {
+    const claimRequests = await storage.claimRequests.get();
+    const pendingRequests = claimRequests.filter((req) => req.type === "pending");
+
+    res.end(JSON.stringify(pendingRequests, replacer));
+  });
+
+  // Upload reviewed claim requests
+  app.post(basePath + "reviewClaimRequests", async function (req, res) {
+    try {
+      console.log(req);
+      console.log(req.body);
+      if (req.header("Authorization") !== process.env.CLAIM_REVIEW_SECRET) {
+        return malformedRequest(res, "invalid review request secret");
+      }
+      const requests: ClaimRequest[] = JSON.parse(JSON.stringify(req.body), reviver);
+
+      await storage.claimRequests.update((claimRequests) => {
+        for (let i = 0; i < claimRequests.length; i++) {
+          const newRequest = requests.find((req) => req.nonce === claimRequests[i].nonce);
+          if (newRequest) {
+            // Request should be updated
+            claimRequests[i] = {
+              ...claimRequests[i],
+              ...newRequest,
+            };
+          }
+        }
+      });
+
+      res.end(JSON.stringify({ success: true }, replacer));
+    } catch (err) {
+      console.error(err);
+      res.statusCode = 500;
+      res.end(JSON.stringify({ success: false }, replacer));
+    }
   });
 }

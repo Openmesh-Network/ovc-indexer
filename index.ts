@@ -15,14 +15,17 @@ import { watchVerifiedContributorTagRemoved } from "./event-watchers/VerifiedCon
 import { VerifiedContributorContract } from "./contracts/VerifiedContributor.js";
 import { VerifiedContributorTagManagerContract } from "./contracts/VerifiedContributorTagManager.js";
 import { historySync } from "./openrd-indexer/utils/history-sync.js";
+import { ClaimRequest } from "./types/requests.js";
 
 export interface VerifiedContributorsStorage {
   [tokenId: string]: VerifiedContributor;
 }
 export type ScoresStorage = Epoch[];
+export type ClaimRequestsStorage = ClaimRequest[];
 export interface Storage {
   verifiedContributors: PersistentJson<VerifiedContributorsStorage>;
   scores: PersistentJson<ScoresStorage>;
+  claimRequests: PersistentJson<ClaimRequestsStorage>;
 }
 
 async function start() {
@@ -48,6 +51,7 @@ async function start() {
   const storage: Storage = {
     verifiedContributors: new PersistentJson<VerifiedContributorsStorage>("verifiedContributors", {}),
     scores: new PersistentJson<ScoresStorage>("scores", []),
+    claimRequests: new PersistentJson<ClaimRequestsStorage>("claimRequest", []),
   };
 
   multichainWatcher.forEach((contractWatcher) => {

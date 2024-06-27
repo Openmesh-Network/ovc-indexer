@@ -1,3 +1,4 @@
+import { ClaimRequest, PendingClaimRequest } from "../types/requests.js";
 import { VerifiedContributor } from "../types/verified-contributor.js";
 
 export type VerifiedContributorReturn = VerifiedContributor;
@@ -13,3 +14,7 @@ export interface UserReturn {
 export interface TotalVerifiedContributorsReturn {
   totalVerifiedContributors: number;
 }
+
+export type ClaimRequestReturn = ClaimRequest[];
+
+export type ClaimRequestsReturn = PendingClaimRequest[];
