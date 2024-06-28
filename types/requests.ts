@@ -5,7 +5,7 @@ export type Hex = string;
 export interface ClaimRequestBase {
   receiver: Address;
   amount: Uint;
-  nonce: Uint;
+  claimId: Uint;
 }
 
 export interface PendingClaimRequest extends ClaimRequestBase {
