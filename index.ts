@@ -51,7 +51,7 @@ async function start() {
   const storage: Storage = {
     verifiedContributors: new PersistentJson<VerifiedContributorsStorage>("verifiedContributors", {}),
     scores: new PersistentJson<ScoresStorage>("scores", []),
-    claimRequests: new PersistentJson<ClaimRequestsStorage>("claimRequest", []),
+    claimRequests: new PersistentJson<ClaimRequestsStorage>("claimRequests", []),
   };
 
   multichainWatcher.forEach((contractWatcher) => {
