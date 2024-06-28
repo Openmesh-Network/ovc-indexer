@@ -120,8 +120,6 @@ export function registerRoutes(app: Express, storage: Storage) {
   // Upload reviewed claim requests
   app.post(basePath + "reviewClaimRequests", async function (req, res) {
     try {
-      console.log(req);
-      console.log(req.body);
       if (req.header("Authorization") !== process.env.CLAIM_REVIEW_SECRET) {
         return malformedRequest(res, "invalid review request secret");
       }
