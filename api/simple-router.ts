@@ -129,7 +129,7 @@ export function registerRoutes(app: Express, storage: Storage) {
 
       await storage.claimRequests.update((claimRequests) => {
         for (let i = 0; i < claimRequests.length; i++) {
-          const newRequest = requests.find((req) => req.nonce === claimRequests[i].nonce);
+          const newRequest = requests.find((req) => req.claimId === claimRequests[i].claimId);
           if (newRequest) {
             // Request should be updated
             claimRequests[i] = {
